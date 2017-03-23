@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+	
+/* ----------------------------------------------------------------------- */	
+	
+	window.addEventListener("load", function() {
+		
+		/* var p1 = document.getElementById("p1"); */
+		var runButton = document.getElementById("run-button");
+		
+		
+		runButton.onclick = function(){
+			/* p1.parentNode.innerText = "오마이"; */
+			/* alert(p1.previousSibling.nodeType);
+			alert(p1.previousSibling.nodeName); */
+		/* 	var inputs = p1.getElementsByTagName("input");
+			inputs[0].value = "sslls"; */
+			/* var input = document.querySelector("#p1 > input:first-child");
+			input.value = "sslls"; */
+			
+			var inputs = document.querySelectorAll("#p1 > input");
+			inputs[0].value = "sslls";
+		};
+		
+	});
+
+/* ----------------------------------------------------------------------- */
+
+	window.addEventListener("load", function() {
+		
+		var changeButton = document.querySelector("#change-button");
+		var img = document.querySelector("#img1");
+		var srcText = document.querySelector("#src-text");
+		var borderText = document.querySelector("#border-text");
+		var borderWidth = document.querySelector("#border-width");
+		var borderStyle = document.querySelector("#border-style");
+		var borderColor = document.querySelector("#border-color");
+		
+		
+		changeButton.onclick = function(){
+			
+			img.src = "image/" + srcText.value;
+			/* img.style.border=borderText.value; */
+			img.style["border-width"]=borderWidth.value+"px";
+			img.style["border-style"]=borderStyle.value;
+			img.style["border-color"]=borderColor.value;
+			/* img.style.borderColor=borderColor.value; */
+		};
+		
+	});
+	
+/* ----------------------------------------------------------------------- */
+
+	window.addEventListener("load", function() {
+		
+		var addButton = document.querySelector("#add-button");
+		var delButton = document.querySelector("#del-button");
+		var cloneButton = document.querySelector("#clone-button");
+		var downButton = document.querySelector("#down-button");
+		var cursor = document.querySelector("#cursor");
+		var container = document.querySelector("#container");
+		
+		
+		
+		addButton.onclick = function(){
+			
+			//이미지 태그 createElement(Tag Name) 를 생성, input 등도 태그 네임중 하나임
+			var img = document.createElement("img");
+			
+			//이미지 속성/스타일 설정
+			img.src = "image/bg1.jpg";
+			img.style["witdh"]="100px";
+			
+			//노드를 document에 추가하기_ DOM
+			container.appendChild(img);
+			
+		};
+		delButton.onclick = function(){
+			var last = container.querySelector("img:last-child");
+			container.removeChild(last); //container가 부모임
+			
+		};
+		cloneButton.onclick = function(){
+			
+			var clone=container.cloneNode(true);
+			
+			//화면에 보이려면 누군가의 꼬리를 물고 있어야된다 / container의 부모를 찾아서
+			container.parentNode.appendChild(clone);
+			
+		};
+		downButton.onclick = function(){
+			
+			var parent = container.parentElement; // 부모로 갖고있는게 text일 수는 없다.
+			var target = cursor.nextElementSibling; //커서 다음 녀석
+			var old = parent.replaceChild(cursor, target); // return값이 있다는 것은 반환값이 있다는것 여기서는 old node가 반환값임
+			parent.insertBefore(old, cursor);
+			
+		};
+		
+		
+	});
+	
+	
+	
+	
+</script>
+</head>
+<body>	
+
+	<input id = "add-button" type="button" value = "이미지 추가" />
+	<input id = "del-button" type="button" value = "이미지 삭제" />
+	<input id = "clone-button" type="button" value = "통째로 복제" />
+	<input id = "down-button" type="button" value = "밑으로 내리기" />
+
+	<div id= "dong">
+		<div id = "cursor">
+			바뀔놈
+		</div>
+		<div id = "container">
+		</div>
+	</div>
+	<hr />
+	images/<input id="src-text" value="bg1.jpg"/><br/>	
+	border-width : <input id="border-width" type="number" value="0"min="0">px<br/>
+	border-style : <input id="border-style" list="style" value="">
+					<datalist id="style">
+						<option value="dotted">
+						<option value="dashed">
+						<option value="solid">
+						<option value="double">
+						<option value="groove">
+						<option value="ridge">
+						<option value="inset">
+						<option value="outset">
+						<option value="none">
+						<option value="hidden">				
+					</datalist><br/>
+	border-color : <input id="border-color" type = "color" value="red"><br/>
+   	<input id="change-button" type="button"  value="변경" />
+   	<img id="img1" src="image/bg1.jpg" />   
+	<hr/>
+	<input id="run-button" type="button" value="실행"/>
+   <div>
+      <font>font</font>
+      <input />
+   </div>
+   <form id="p1">
+         test1
+         <input />
+         <input />
+   </form>
+   test2
+   <p>
+      para
+   </p>
+   hello
+   <!-- 오마이 갓 뚜-->
+</body>
+</html>

@@ -1,0 +1,111 @@
+@CHARSET "UTF-8";
+
+/* id(#)는 하나만을 위해 줄 수 있다
+#main-menu >ul>li:nth-child(2) <- (2)번째아이 지정
+{
+   color: lime;
+}
+#main-menu >h3~ul>li.first <- h3 밑으로 목록리스트중 첫째
+{
+   color: red;
+}
+
+class(.)는 여러개 동시 부여 가능
+
+(>)바로 아래 자손, ( )아래 자손들다
+
+input[type] {} <- []안의 내용으로 특정해줌  */
+
+
+
+#header{
+   
+   height: 70px;
+ 
+   
+}
+
+#visual{
+   
+   height: 171px;
+   background: #313131 url("../../images/bg-visual.png") no-repeat center;
+   border-top:3px solid #8CBA34;
+ /*   background-attachment: fixed; */
+ /*   overflow: scroll; */
+  
+}
+
+#body{
+   
+   /* min-height: 300px; */
+ 
+   /* border: 1px solid red; */
+   border-top:5px solid #8cba34;
+   margin-top:1px;
+   
+}
+
+#body .content-container{
+   background: url("../../images/bg-body.png") repeat-y center;
+   
+}
+
+#footer{
+   
+   height: 100px;
+   background: #313131;
+   
+}
+
+#aside{
+   float:left;
+   width:205px;
+   min-height:300px;
+ 
+   background:url("../../images/bg-aside-title.png") no-repeat center top;
+   
+}
+
+#main{
+   box-sizing:border-box;
+   position:relative; /* 나를 기준으로 내 자식들은 */ 
+   
+   float:left;
+   width:755px;
+   min-height:300px;
+   
+   padding-left:35px;
+   padding-top:45px;
+   
+   
+    
+}
+
+/* #quick-menu{
+   
+   position:absolute;
+   left:100px;
+   top:100px;
+   background:url("../../images/logo.png") no-repeat left top;
+   background-size:cover;
+   border:1px solid red;
+   
+   width:100px;
+   height:100px;
+  
+} */
+
+.content-container{
+   
+   height:100%;
+   min-height:inherit;
+   width:960px;
+   margin-left: auto;
+   margin-right:auto;
+   position: relative;
+   
+}
+.clearfix {
+  overflow: auto;
+  zoom: 1;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+	window.addEventListener("load", function(){
+		
+		var btnSum = document.getElementById("btn-sum");
+		var x = document.getElementById("txt-x");
+		var y = document.getElementById("txt-y");
+		var sum = document.getElementById("txt-sum");
+		
+		btnSum.onclick = function(){
+			
+			x=parseInt(x.value);
+			y=parseInt(y.value);
+			
+			sum.value= x+y;
+			
+		}
+	});
+	
+	/* ----------------------------------------------------------------------- */	
+	
+	window.addEventListener("load", function() {
+		
+		var lblCount=document.getElementById("lbl-count");
+		var btnCd = document.getElementById("btn-countdown");
+		
+		var timer=null;
+		
+		btnCd.onclick = function(){
+			
+			if(timer==null){
+				timer = setInterval(function() {
+					
+					var count = parseInt(lblCount.innerText);
+					
+					if(count==0){
+						clearInterval(timer);
+						timer=null;
+					}
+					else	
+						lblCount.innerText = count - 1;
+					
+				}, 1000)
+			}
+			
+			
+		}
+		
+	});
+	
+	/* ----------------------------------------------------------------------- */	
+	
+	window.addEventListener("load", function(e) {
+		
+		var openBtn = document.getElementById("open-button");
+		var closeBtn = document.getElementById("close-button");
+		var win = null;
+		
+		openBtn.onclick = function(){
+			if(win==null)
+				win=open("http://youtube.com","_blank","width=700px, height=500px") ;    //_self,_blank
+		};
+		
+		closeBtn.onclick = function(){
+			if(win!=null)
+				win.close();
+				win=null;
+			
+		};
+	});
+	
+	
+	/* ----------------------------------------------------------------------- */	
+	
+	window.addEventListener("load", function() {
+		
+		var ifChange = document.getElementById("if-change");
+		var ifm = document.getElementById("ifm");
+		
+		
+		ifChange.onclick = function(){
+			
+			frames[0].document.body.innerText="bbbbbbbbbbbbbbbbbbbbbbbbbb";
+			
+		};
+		
+	});
+	
+/* ----------------------------------------------------------------------- */	
+	
+	window.addEventListener("load", function() {
+		
+		var win = document.getElementById("ifm").contentWindow;
+		var urlText = document.getElementById("url-text");
+		var urlButton = document.getElementById("url-button");
+		var f5Button = document.getElementById("f5-button");
+		var backBtn	= document.getElementById("back-button");
+		var forwardBtn	= document.getElementById("forward-button");
+		
+		
+		urlButton.onclick = function(){
+			/* frames[0].location.href = "http://" + urlText.value; */
+			win.location.href = "http://" + urlText.value;
+		};
+		
+		f5Button.onclick = function(){
+			
+			win.location.reload();
+			
+		};
+		backBtn.onclick = function(){
+			
+			history.back();
+			
+		};
+		forwardBtn.onclick = function(){
+			
+			history.forward();
+			
+		};
+		
+	});
+	
+	
+</script>
+</head>
+<body>
+	<hr/>
+		http://<input id="url-text" type="text" value="www.daum.net"/>
+		<input id="url-button" type="button" value="이동"/>
+		<input id="f5-button" type="button" value="새로고침"/>
+		<input id="back-button" type="button" value="back"/>
+		<input id="forward-button" type="button" value="forward"/>
+	<hr/>
+	<div style="width:800px;height:500px;">
+		<iframe id="ifm" src="article.html" style="width:1000px; ;height:500px;border:0px;"></iframe>
+		<input id="if-change" type="button" value="변경"/>
+	</div>
+	<br/><br/>
+	<hr/>
+	<img src="../hello"/>
+	<hr/>
+	<div>
+		<input id="open-button" type="button" value="새창띄우기"/>	
+		<input id="close-button" type="button" value="창닫기"/>
+	</div>
+	<hr/>
+	<p>
+       	남은시간 <span id="lbl-count">60</span>초
+       	<input id="btn-countdown" type="button" value="카운트 시작" />
+   	</p>
+	<hr/>
+	<p>
+		<label>x:</label><input id="txt-x" />
+		<label>y:</label><input id="txt-y" />
+	</p>
+	<p>
+		sum = <input id="txt-sum" />
+	</p>
+	<p>
+		<input id="btn-sum" type="button" value="Sum" />
+	</p>
+</body>
+</html>
