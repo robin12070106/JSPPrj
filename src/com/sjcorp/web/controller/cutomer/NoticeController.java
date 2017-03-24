@@ -1,4 +1,4 @@
-package com.sjcopr.web.controller.cutomer;
+package com.sjcorp.web.controller.cutomer;
 
 import java.io.IOException;
 import java.util.List;

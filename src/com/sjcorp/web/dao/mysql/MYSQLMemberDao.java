@@ -11,9 +11,73 @@ import java.util.List;
 
 import com.sjcorp.web.dao.MemberDao;
 import com.sjcorp.web.entity.Member;
+import com.sjcorp.web.entity.NoticeView;
 
 public class MYSQLMemberDao implements MemberDao {
 
+	
+	@Override
+	public Member get(String id) {
+					
+		String sql = "select*from MEMBER where ID=?";
+		Member member = null;
+	        
+	      try {
+	    	 Class.forName("com.mysql.jdbc.Driver");
+	         String url = "jdbc:mysql://211.238.142.84/newlecture?autoReconnect=true&amp;useSSL=false&characterEncoding=UTF-8";
+	         Connection con = DriverManager.getConnection(url, "newlec", "sclass");
+	         PreparedStatement st = con.prepareStatement(sql);
+	         st.setString(1, id);	          
+	         
+	         ResultSet rs = st.executeQuery();
+         
+
+	         if (rs.next()) {
+	        	
+	        	member = new Member();
+	            member.setId(rs.getString("ID"));
+	            member.setName(rs.getString("NAME"));
+	            member.setPwd(rs.getString("PWD"));
+	            member.setNicName(rs.getString("NICNAME"));
+	            member.setPhoto(rs.getString("PHOTO"));
+	            member.setGender(rs.getString("GENDER"));
+	            member.setBirthday(rs.getString("BIRTHDAY"));
+	            member.setIsLunar(rs.getInt("IS_LUNAR"));
+	            member.setPhone(rs.getString("PHONE"));
+	            member.setEmail(rs.getString("EMAIL"));
+	            member.setZipCode(rs.getString("ZIPCODE"));
+	            member.setAddress(rs.getString("ADDRESS"));
+	            member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
+	            member.setRegDate(rs.getDate("REG_DATE"));
+	            member.setRegIP(rs.getString("REG_IP"));
+	            member.setRegEnv(rs.getString("REG_ENV"));
+	            member.setPwdModifyKey(rs.getString("PWD_MODIFY_KEY"));
+	            member.setRegAdmin(rs.getString("REG_ADMIN"));
+	            member.setGuid(rs.getString("GUID"));
+	            member.setDisabled(rs.getBoolean("DISABLED"));
+	            member.setDisabledReason(rs.getString("DISABLED_REASON"));
+	            member.setLastLoginIp(rs.getString("LAST_LOGIN_IP"));
+	            member.setLastLoginPlatform(rs.getString("LAST_LOGIN_PLATFORM"));
+	            member.setLastLoginTime(rs.getDate("LAST_LOGIN_TIME"));
+	     
+	            
+	         }
+	         rs.close();
+	         st.close();
+	         con.close();
+
+	      } catch (ClassNotFoundException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+
+	         return member;
+			     
+	}	
+	
    @Override
    public List<Member> getList(){
 
@@ -131,6 +195,7 @@ public class MYSQLMemberDao implements MemberDao {
 
          return list;
    }
+   
    @Override
    public int add(Member member) {
         String sql = "INSERT INTO MEMBER(ID,NAME,PWD,NICNAME,GENDER,BIRTHDAY,IS_LUNAR,PHONE,EMAIL,ZIPCODE,ADDRESS,ADDRESS_DETAIL,REG_DATE,LAST_LOGIN_TIME)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,DATETIME,DATETIME)";
@@ -247,6 +312,8 @@ public void delete(String id) {
      e.printStackTrace();
   }
 }
+
+
 
    
    

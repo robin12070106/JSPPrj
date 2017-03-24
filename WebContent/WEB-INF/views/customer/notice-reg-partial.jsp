@@ -14,18 +14,13 @@
     			var request = new window.XMLHttpRequest();
     			
     			var progressBar = document.querySelector("progress");
-    			
                 request.onprogress = function(e){
                    progressBar.value = parseInt((e.loaded/e.total)*100);
                 };
                	
-				request.onload = function(e){
+				request.onload = function(){
                		               		
-               		var screen = document.querySelector(".screen");
-               		var formScreen = document.querySelector(".form-screen");
                		
-               		screen.remove();
-               		formScreen.remove();
                	};
     			
                	request.open("POST","notice-reg-ajax",true);

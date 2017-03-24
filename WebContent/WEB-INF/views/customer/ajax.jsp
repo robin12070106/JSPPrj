@@ -417,7 +417,6 @@
 				               		
 
 				               		var screen = document.createElement("div");
-				               		screen.className = "screen";
 					               	screen.style.width="100%";
 					               	screen.style.height="100%";
 					               	screen.style.position="fixed";
@@ -430,8 +429,6 @@
 					               	
            		
 					               	var formScreen = document.createElement("div");
-					               	
-					               	formScreen.className = "form-screen";
 					               	formScreen.style.width="100%";
 					               	formScreen.style.height="100%";
 					               	formScreen.style.position="fixed";

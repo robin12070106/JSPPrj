@@ -1,40 +1,7 @@
-<%@page import="com.sjcorp.web.entity.NoticeView"%>
-<%@page import="java.util.List"%>
-<%@page import="com.sjcorp.web.dao.NoticeDao"%>
-<%@page import="com.sjcorp.web.dao.mysql.MYSQLNoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%
-
-	String _page = request.getParameter("p");
-	String _field = request.getParameter("f");
-	String _query = request.getParameter("q");
-
-	int pg = 1;
-	String field = "TITLE";
-	String query = "";
-	
-	
-	if (_page != null && !_page.equals("")) // 전달된 page값이 있다면
-			pg = Integer.parseInt(_page);
-	if (_field != null && !_field.equals("")) // 전달된 field값이 있다면
-		   field = _field;
-	if (_query != null && !_query.equals("")) // 전달된 query값이 있다면
-		   query = _query;
-
-
-	NoticeDao noticeDao = new MYSQLNoticeDao();
-	List<NoticeView> list = noticeDao.getList(pg, field, query);
-	int size = noticeDao.getSize(field,query);
-
-%>
-
-
-
-
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -320,12 +287,18 @@
 			               <fieldset>
 			                  <legend class="hidden">검색필드</legend>
 			                  <label class="hidden">검색분류</label>
-			                  <select name="f">                                          
-			                     <option value="TITLE" <%if(field.equals("TITLE")){%>selected<%} %>>제목</option>
-			                     <option value="CONTENT" <%if(field.equals("CONTENT")){%>selected<%} %>>내용</option>                     
+			                  <select name="f">
+			                  	<c:if test="${field == 'TITLE'}">
+			                  		<c:set var="selTitle" value="selected" />
+			                  	</c:if>
+			                  	<c:if test="${field == 'CONTENT'}">
+			                  		<c:set var="selContent" value="selected" />
+			                  	</c:if>			                  	                                         
+			                     <option value="TITLE" ${selTitle }>제목</option>
+			                     <option value="CONTENT" ${selContent }>내용</option>                     
 			                  </select>
 			                  <label class="hidden">검색어</label>
-			                  <input name="q" type="text" value="<%=query%>" placeholder="검색어를 입력하세요"/>
+			                  <input name="q" type="text" value="${query }" placeholder="검색어를 입력하세요"/>
 			                  <input  class="btn btn-search"type="submit" value="검색"/>
 			                  <input name="p" type="hidden" value="1" />
 			               </fieldset>               
@@ -333,137 +306,35 @@
 				</div>
 			
 				<div class="notice margin">
-	               <h3>공지목록[<%=size %>]</h3>
+	               <h3>공지목록[${size}]</h3>
 	               
 	               <script type="text/javascript">
 	               
 		                window.addEventListener("load", function(e) {
 		               		
-		               		/* var notices=[
+		               		var notices=[
 		               			{code:"1",title:"ddddd"},
 		               			{code:"2",title:"eeeee"},
 		               			{code:"3",title:"fffff"}
-		               			]; */  
-		               			
-		               		var regButton = document.querySelector("#reg-button")
-		               			
+		               			];       		
+		               		
 		               		var moreBtn = document.querySelector("#more-button");
 		               		
-							/*var a = function(){};
-							moreBtn.addEventListener("click",a);
-							moreBtn.removeEventListener("click",a); */
-
 		               		moreBtn.onclick = function(){
-		               	
-		               		//eval("var x =8+4;");
-		               		
-		               		//var data=eval('[{code:"1",title:"dd44ddd"},{code:"2",title:"eee334ee"},{code:"3",title:"fff343ff"}];');
-		               		//var data = JSON.parse('[{"code":"1","title":"오오오오오오"},{"code":"2","title":"요요요요요요"},{"code":"3","title":"유유유유유유"}]');
-		               		//alert(data[1].title);
 		               			
+		               			var template = document.querySelector("#notice-row");
 		               			
+		               			for(var i in notices){
+				               		var tbody = document.querySelector(".notice-table tbody");		               		
+				               		var tds = template.content.querySelectorAll("td");
+				               		
+				               		tds[0].innerText = notices[i].code;
+				               		tds[1].innerText = notices[i].title;
+				               		
+				               		var clone = document.importNode(template.content, true);
+			               			tbody.appendChild(clone);
+		               			}
 		               			
-		               		//var request = new ActiveXObject("Microsoft.XMLHTTP");
-				               	
-				               	var request = new window.XMLHttpRequest();
-				               	request.open("GET","ajax-data.jsp?p=3",true);
-				               	//request.onreadystatechange = function(){
-				               	request.onload = function(){
-				               		//if(request.readyState==4){
-					               		var notices = JSON.parse(request.responseText);			               	
-							              
-				               			
-				               			var template = document.querySelector("#notice-row");
-				               			
-				               			for(var i in notices){
-						               		var tbody = document.querySelector(".notice-table tbody");		               		
-						               		var tds = template.content.querySelectorAll("td");
-						               		
-						               		tds[0].innerText = notices[i].code;
-						               		tds[1].innerText = notices[i].title;
-						               		
-						               		var clone = document.importNode(template.content, true);
-					               			tbody.appendChild(clone);
-				               		    
-			               				};
-			               				
-			               				document.body.removeChild(screen);
-			               				
-			               			//};
-				               		
-				               	};
-				               	
-				               	request.send();	               	
-				               	
-				               	var screen = document.createElement("div");
-				               	screen.style.width="100%";
-				               	screen.style.height="100%";
-				               	screen.style.position="fixed";
-				               	screen.style.left="0px";
-				               	screen.style.top="0px";
-				               	screen.style.background="#000";
-				               	screen.style.opacity="0.5";				               			               	
-				               	
-				               	document.body.appendChild(screen);
-				               
-		               		};
-		               		
-		               		regButton.onclick = function(){
-		               			
-		               			
-		               			var request = new window.XMLHttpRequest();
-				               	request.open("GET","notice-reg-partial.jsp",true);				               	
-				               	request.onload = function(){
-				               		
-
-				               		var screen = document.createElement("div");
-				               		screen.className = "screen";
-					               	screen.style.width="100%";
-					               	screen.style.height="100%";
-					               	screen.style.position="fixed";
-					               	screen.style.left="0px";
-					               	screen.style.top="0px";
-					               	screen.style.background="#000";
-					               	screen.style.opacity="0.5";				               			               	
-					               	
-					               	document.body.appendChild(screen);
-					               	
-           		
-					               	var formScreen = document.createElement("div");
-					               	
-					               	formScreen.className = "form-screen";
-					               	formScreen.style.width="100%";
-					               	formScreen.style.height="100%";
-					               	formScreen.style.position="fixed";
-					               	formScreen.style.left="0px";
-					               	formScreen.style.top="0px";					               					               			               	
-					               	
-					               	document.body.appendChild(formScreen);
-					               	
-				               		var formText = request.responseText;
-				               		formScreen.innerHTML = formText;
-				               		
-				               		var form = formScreen.querySelector("form");
-				               		form.style.background = "#fff";
-				               		form.style.width ="581px";
-				               		form.style.marginLeft="auto";
-				               		form.style.marginRight="auto";
-				               		form.style.position = "relative";
-				               		form.style.top="50%";
-				               		form.style.transform = "translateY(-50%)";
-				               		
-				               		
-				               		var script = formScreen.querySelector("script");
-				               		eval(script.textContent);
-				               		
-				               		
-				               	};
-				               	
-				               	request.send();
-		               			
-		               			return false;
-		               		
-		               		
 		               		};
 		               		
 		               	});
@@ -489,38 +360,41 @@
 			               		<td></td>
 			               	</tr>
 		               </template>
-	                  <% for(NoticeView v : list){ %>
+	                  <c:forEach var="v" items="${list }">	                  
 	                     <tr>
-	                        <td><%=v.getCode() %></td>
-	                        <td><%=v.getTitle() %></td>
-	                        <td><%=v.getWriter() %></td>
-	                        <td><%=v.getRegDate() %></td>
-	                        <td><%=v.getHit() %></td>
-	                     </tr>	
-	                   <% } %>                     
+	                        <td>${v.code}</td>
+	                        <td><a href="notice-detail?code=${v.code}">${v.title}</a></td>
+	                        <td>${v.writer}</td>
+	                        <td>${v.regDate}</td>
+	                        <td>${v.hit}</td>
+	                     </tr>	                   
+	                   </c:forEach>                     
 	                  </tbody>
 	               </table>
            		</div>
+				<fmt:parseNumber var="sizeInt" integerOnly="true" value="${size/10 }"/>
+				<c:set var="last" value="${(size%10)>0 ? sizeInt+1 : sizeInt }"/>
 				
-				<%
-					int last = (size%10)>0 ? (size/10)+1 : size/10;					
-				%>
-				<div class="margin"><%=pg %>/<%=last %> pages</div>				
+				<div class="margin">${pg }/${last } pages</div>				
 				<div class="margin">
-	            <div>
-	               <a href="">이전</a>
-	            </div>
-	            <ul>
-	               <% for(int i=1;i<=last;i++){ %>
-	               <li><a href="?p=<%=i %>&f=<%=field%>&q=<%=query%>"><%=i %></a></li>
-	               <%} %>
-	            </ul>
-	            <div>
-	               <a href="">다음</a>
-	            </div>
-	         </div>	
+		            <div class = "page">
+		            <c:if test="${pg-1>0 }">		            
+		               <a href="?p=${pg-1 }&f=${field}&q=${query}">이전</a>
+					</c:if>
+		            </div>
+		            <ul class="page">
+		               <c:forEach var="i" begin="1" end="${last }">
+		               <li class="page">&nbsp;<a href="?p=${i }&f=${field }&q=${query}">${i }</a>&nbsp;</li>
+		               </c:forEach>
+		            </ul>
+		            <div>
+		            	<c:if test="${pg+1<=last }">
+		               <a href="?p=${pg+1 }&f=${field }&q=${query}">다음</a>
+		               </c:if>
+		            </div>		      	
+		        </div>
 			<div>
-				<a id="reg-button" href="">글쓰기</a>
+				<a href="notice-reg.jsp">글쓰기</a>
 				<span id="more-button">더보기</span>
 			</div>
 

@@ -1,4 +1,4 @@
-package com.sjcopr.web.controller.cutomer;
+package com.sjcorp.web.controller.cutomer;
 
 import java.io.File;
 import java.io.IOException;

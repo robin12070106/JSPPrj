@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#home{
+	width: 700px;
+	height: 500px;
+	border: 1px solid maroon;
+}
+#toolbar{
+	height: 100px;
+	background: gray; 
+}
+#room{
+	height: 400px;
+	background: purple;
+}
+#room div{
+	width: 100px;
+	height: 50px;
+	background: yellow;
+	transition-duration: 1s;
+	
+	transition-property: all;
+	transition-delay: .5s;
+	transition-timing-function: steps(10,end);
+
+}
+#room div:hover{	
+	transform-origin: center top;
+	transform: skew(45deg, 22deg);
+}
+</style>
+</head>
+<body>
+	<h1>교실</h1>
+	<div id="home">
+		<div id="toolbar">
+		</div>
+		<div id="room">
+			<div></div>
+		</div>	
+	</div>
+</body>
+</html>

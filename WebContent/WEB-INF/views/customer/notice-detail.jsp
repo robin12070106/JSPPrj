@@ -1,8 +1,13 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>notice</title>
 <link href="../css/customer/style.css" type="text/css" rel="stylesheet"/>
 </head>
 <!-- <script src = "../js/customer/notice.js" type="text/javascript">
@@ -266,7 +271,7 @@
 		
 			<main id="main">
 													
-				<h2 class="main-title">공지사항</h2>
+				<h2 class="main-title">공지사항 내용</h2>
 			
 				<div class="breadcrumb">	
 					<h3 class="hidden">breadcrumb</h3>
@@ -275,58 +280,101 @@
 						<li>고객센터</li>
 						<li>공지사항</li>
 					</ol>
-				</div>
-			
-				<div class="main-margin">
-					<h3 class="hidden">공지사항</h3>
-						<form>
-			               <fieldset>
-			                  <legend class="hidden">검색필드</legend>
-			                  <label class="hidden">검색분류</label>
-			                  <select>                                          
-			                     <option>제목</option>
-			                     <option>내용</option>                     
-			                  </select>
-			                  <label class="hidden">검색어</label>
-			                  <input type="text" placeholder="검색어를 입력하세요"/>
-			                  <input  class="btn btn-search"type="submit" value="검색"/>
-			               </fieldset>               
-			            </form>
-				</div>
-			
-				<div class="notice margin">
-	               <h3>공지목록</h3>
-	               <table class="table notice-table">
-	                  <thead>
-	                     <tr>
-	                        <td>번호</td>
-	                        <td>제목</td>
-	                        <td>작성자</td>
-	                        <td>작성일</td>
-	                        <td>조회수</td>
-	                     </tr>
-	                  </thead>
-	                  <tbody> <!-- 여러개 올 수 있다 -->
-	                     <tr>
-	                        <td>44</td>
-	                        <td>서적과 사이트 개편에 대한 안내</td>
-	                        <td>admin</td>
-	                        <td>2016-09-21</td>
-	                        <td>776</td>
-	                     </tr>
-	                     <tr>
-	                        <td>43</td>
-	                        <td>리눅스 강의 7월 1일부터 업로드 할 예정입니다.</td>
-	                        <td>admin</td>
-	                        <td>2016-06-30</td>
-	                        <td>854</td>
-	                     </tr>
-	                  </tbody>
-	               </table>
-           		</div>
-				
-				<div class="margin">1/3 pages</div>
-				<div class="margin">이전123다음</div>				
+				</div>						
+						
+		            <table border="1">
+		               <tbody>
+		                  <tr>		                  
+		                     <th>제목</th>
+		                     <td>
+		                     	${n.title } <!-- //el표기 -->
+		                     </td>	                    
+		                  </tr>
+		                  <tr>
+		                     <th>작성자</th>
+		                     <td>
+								${n.writer }
+							 </td>	                    
+		                  </tr>
+		                  <tr>
+		                     <th>작성일</th>
+		                     <td>
+								${n.regDate }
+							 </td>	                    
+		                  </tr>
+		                  <tr>
+		                     <th>조회수</th>
+		                     <td>
+		                     	${n.hit }
+		                     </td>	                    
+		                  </tr>
+		                  <tr>
+		                     <th>첨부파일</th>
+		                     <td>
+		                     <%-- 	<%
+		                     		/* List ns = new ArrayList();
+		                     		ns.add("a");
+		                     		ns.add("b");
+		                     		ns.add("c");
+		                     		ns.add("d");
+		                     		ns.add("e");
+		                     		ns.add("f"); */
+		                     		
+		                     		String hbs="롤, 야구, 코딩, 먹기, 자기";
+		                     		
+		                     		
+		                     		pageContext.setAttribute("hbs", hbs);
+		                     	%> --%>
+		                     	<%-- <c:forEach var="str" begin="0" end="3" items="${ns }" varStatus="">
+		                     	${st.index} : 가나다라 ${str }<br/>
+		                     	</c:forEach> --%>
+		                     	
+		                     	<%-- <c:forTokens var="hb" items="${hbs }" delims=",">
+		                     		${hb}<br/>
+		                     	</c:forTokens> --%>
+		                     <c:forEach var="f" items="${list }">		                     
+		                     <a href="upload/${f.src }" download>${f.src }</a>							 
+							 </c:forEach>     
+							 </td>                
+		                  </tr>
+		                  <tr>              
+		                     <td colspan="2">
+		                     	${n.content }
+		                     	<c:forEach var="f" items="${list }">		                     
+		                     	<img src="upload/${f.src }"/>							 
+								</c:forEach>                      
+		                     </td>
+		                  </tr>   
+		               </tbody>
+		            </table>
+		            <div>
+						<a href="notice.jsp?code=${n.code }">목록</a>		            	                        
+		               <a href="notice-edit.jsp?code=${n.code }">수정</a>
+		               <a href="notice-del-proc.jsp?code=${n.code }">삭제</a>
+		            </div>
+		            <div>
+		            	<ul>
+		            		<li>
+		            			<span>다음글: </span>
+		            			<c:if test="${empty next }">
+		            			<span>다음글이 존재하지 않습니다</span>
+		            			</c:if>
+		            			<c:if test="${not empty next }">
+		            			<a href="?code=${next.code }">${next["title"] }</a> <!--  n.xxx/n["xxx"] 둘 다 동일 -->
+		            			</c:if>
+		            		</li>
+		            		<li>
+		            			<span>이전글: </span>
+		            			<c:if test="${empty prev }">
+		            			<span>이전글이 존재하지 않습니다</span>
+		            			</c:if>
+		            			<c:if test="${not empty next }">
+		            			<a href="?code=${prev.code }">${prev.title }</a>
+		            			</c:if> 
+		            		</li>
+		            	</ul>
+		            </div>
+            		
 			</main>
 		</div>
 	</div>	
