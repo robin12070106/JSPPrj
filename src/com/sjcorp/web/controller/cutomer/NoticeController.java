@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tiles.TilesContainer;
+import org.apache.tiles.access.TilesAccess;
+
 import com.sjcorp.web.dao.NoticeDao;
 import com.sjcorp.web.dao.mysql.MYSQLNoticeDao;
 import com.sjcorp.web.entity.NoticeView;
@@ -54,7 +57,9 @@ public class NoticeController extends HttpServlet{
 		request.setAttribute("list", list);
 		request.setAttribute("size", size);
 		
-		request.getRequestDispatcher("notice.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/customer/notice.jsp").forward(request, response);
+		
+		
 	}
 	
 }

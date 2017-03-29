@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -25,12 +25,29 @@ import com.sjcorp.web.entity.NoticeFile;
 
 
 
-@WebServlet("/customer/notice-reg-proc")
-public class NoticeRegProcController extends HttpServlet{
+@WebServlet("/customer/notice-reg")
+public class NoticeRegController extends HttpServlet{
 
+	
 		@Override
-		protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+			HttpSession session = request.getSession();
+			
+			//인증과 권한
+			if(session.getAttribute("id")==null)
+				//response.getWriter().println("<script>alert('인증이 요구되는 페이지 입니다');location.href='../account/login';</script>");
+				response.sendRedirect("../account/login?return-url=../customer/notice-reg");
+			else
+				request.getRequestDispatcher("/WEB-INF/views/customer/notice-reg.jsp").forward(request, response);
+			
+		}
+		
+		@Override
+		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 			PrintWriter out = response.getWriter();
 			
 			ServletContext ctx = request.getServletContext();
@@ -82,6 +99,6 @@ public class NoticeRegProcController extends HttpServlet{
 			if(result>0)
 				response.sendRedirect("notice"); 	
 			
-			
 		}
+		
 }

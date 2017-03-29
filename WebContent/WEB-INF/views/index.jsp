@@ -16,7 +16,7 @@
 		<a href="account/join">회원가입</a>
 		<a href="customer/notice">고객센터</a>
 		<c:if test="${not empty sessionScope.id }">
-		<a href="account/logout">${sessionScope.id }님 로그아웃</a>
+		<a href="account/logout">${sessionScope.id } 님 로그아웃</a>
 		</c:if>
 	</header>
 	<h1>WTF</h1>

@@ -46,7 +46,7 @@ public class NoticeDetailController extends HttpServlet{
 		request.setAttribute("prev", prev);
 		request.setAttribute("list", list);
 		
-		request.getRequestDispatcher("notice-detail.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/customer/notice-detail.jsp").forward(request, response);
 	}
 	
 }

@@ -33,6 +33,7 @@ public class LoginController extends HttpServlet{
 
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("password");
+		String returnUrl = request.getParameter("return-url");
 		
 		Member member = new MYSQLMemberDao().get(id);
 		
@@ -51,7 +52,7 @@ public class LoginController extends HttpServlet{
 			validate = false;
 			System.out.println("비밀번호 틀림");
 		
-		//인증 성공 시 세션에 저장	
+		//인증 성공 시 세션에 저장	- 인증정보를 저장해 다른 페이지에서도 따로설정하지 않고도 쓸 수 있게 하기 위해
 		}else {
 			session.setAttribute("id", id);
 			System.out.println("로그인 성공");
@@ -61,7 +62,11 @@ public class LoginController extends HttpServlet{
 		//페이지 이동
 		//성공시
 		if(validate)
-			response.sendRedirect("../index");
+			//로그인 후 원래하던 활동 그 자리로 돌아가기
+			if(returnUrl!=null)
+				response.sendRedirect(returnUrl);
+			else
+				response.sendRedirect("../index");
 		//실패시
 		else{
 			request.setAttribute("validate", validate);

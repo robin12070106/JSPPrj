@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
-import com.sjcorp.web.dao.mysql.MYSQLMemberDao;
-import com.sjcorp.web.entity.Member;
-
 
 
 @WebServlet("/account/logout")
@@ -25,7 +22,7 @@ public class LogoutController extends HttpServlet{
 				
 		request.getSession().invalidate();
 		
-		response.sendRedirect("../index");
+		response.sendRedirect("index");
 		
 	}
 	

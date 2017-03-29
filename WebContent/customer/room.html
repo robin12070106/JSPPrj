@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+@keyframes zoom-in{
+	from{
+		width:100px;
+	}
+	50%{
+		width: 1500px;
+	}
+	to{
+		width:700px;
+	}
+}
 #home{
 	width: 700px;
 	height: 500px;
@@ -14,33 +25,135 @@
 	background: gray; 
 }
 #room{
+	position:relative;
 	height: 400px;
 	background: purple;
 }
 #room div{
+	position:absolute;
+	left:10px;
+	top:10px;
 	width: 100px;
 	height: 50px;
 	background: yellow;
-	transition-duration: 1s;
+	border-radius: 10px;
+	box-shadow: 2px 2px 2px #453054;
 	
-	transition-property: all;
-	transition-delay: .5s;
-	transition-timing-function: steps(10,end);
-
+	transition-duration: .5s;
+	transition-property: left, top, transform;	
+	transition-timing-function: ease-out, ease-out, ease-in-out;
+	transition-delay: .5s
+	
+	/*transition-delay: .5s;
+	transition-timing-function: steps(10,end);*/
 }
 #room div:hover{	
-	transform-origin: center top;
-	transform: skew(45deg, 22deg);
+	animation-name: zoom-in;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	
+	/* transform-origin: center top;
+	transform: skew(45deg, 22deg); */
 }
 </style>
 </head>
 <body>
+	<script>
+
+		window.addEventListener("load", function(e) {
+		 
+			var room = document.querySelector("#room");
+			
+			room.onclick = function(e){
+				
+				if(e.target===e.currentTarget)
+					return;
+				
+				e.target.style.border="2px solid blue";
+				e.currentTarget.style.border="2px solid red";
+				
+				
+				alert("hello");
+				
+			};
+			
+			
+		 	var divs = document.querySelectorAll("#room div");
+		 	
+		 	
+			var zoomInButton = document.querySelector("#zoom-in-button");
+		
+			zoomInButton.onclick = function(e){
+				
+				for(var i=0;i<divs.length;i++){
+					divs[i].style.left=divs[i].dataset.dx;
+					divs[i].style.top=divs[i].dataset.dy;
+					divs[i].style.transform="rotate(360deg)";
+					divs[i].style.transitionDelay=(0.2*i)+"s";
+						
+				}
+				
+			};		 
+			
+		});
+/* 	 window.addEventListener("load", function(e) {
+		 
+		 var zoomInButton = document.querySelector("#zoom-in-button");
+		 
+		 zoomInButton.onclick = function(e){
+			 
+			 var divs = document.querySelectorAll("#room div");
+			 var poses=[
+				 {left:'100px', top:'200px'},
+				 {left:'300px', top:'200px'},
+				 {left:'500px', top:'200px'}
+			 ];
+			 
+			 
+			for(var i in divs){
+				divs[i].animate([
+					 {left:divs[i].offsetLeft+'px', top:divs[i].offsetTop+'px'},
+					 poses[i]
+					 ],1000);				
+			};
+			
+			
+			-------------------------------------------------------------
+			
+			
+			 
+			 div.style.animationName = "zoom-in";
+			 div.style.animationDuration = "1s";
+			 --------------------------------------			 			 
+			 div.animate([
+				 {left:div.offsetLeft+'px', top:div.offsetTop+'px'},
+				 {left:'100px', top:'100px'},
+				 {left:'200px', top:'0px'}
+				 ],1000);
+			 
+			 div.style.left="200px";
+			 div.style.top="0px";
+			--------------------------------------------------------------------- 
+		 };		 
+		 
+	 }); */
+	
+	</script>
 	<h1>교실</h1>
 	<div id="home">
 		<div id="toolbar">
+			<input id="zoom-in-button" type="button" value="zoom-in"/>
 		</div>
 		<div id="room">
-			<div></div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">1</div>
+			<div data-sx="" data-sy="" data-dx="220px" data-dy="100px">2</div>
+			<div data-sx="" data-sy="" data-dx="340px" data-dy="100px">3</div>
+			<div data-sx="" data-sy="" data-dx="460px" data-dy="100px">4</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="200px">5</div>
+			<div data-sx="" data-sy="" data-dx="220px" data-dy="200px">6</div>
+			<div data-sx="" data-sy="" data-dx="340px" data-dy="200px">7</div>
+			<div data-sx="" data-sy="" data-dx="460px" data-dy="200px">8</div>			
 		</div>	
 	</div>
 </body>
