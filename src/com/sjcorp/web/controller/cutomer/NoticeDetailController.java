@@ -33,9 +33,7 @@ public class NoticeDetailController extends HttpServlet{
 		
 		NoticeView n = noticeDao.get(code);		
 		NoticeView next = noticeDao.getNext(code);
-		NoticeView prev = noticeDao.getPrevious(code);
-		
-		
+		NoticeView prev = noticeDao.getPrevious(code);		
 		List<NoticeFile> list = noticeFileDao.getList(n.getCode());
 		
 		

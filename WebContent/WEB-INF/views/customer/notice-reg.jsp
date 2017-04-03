@@ -13,7 +13,7 @@
 			</ol>
 		</div>
 				
-		<form method="post" enctype="multipart/form-data">
+		<form method="post">
             <table border="1">
                <tbody>
                   <tr>

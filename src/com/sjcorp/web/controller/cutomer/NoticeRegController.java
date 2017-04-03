@@ -52,6 +52,7 @@ public class NoticeRegController extends HttpServlet{
 			
 			ServletContext ctx = request.getServletContext();
 			String path = ctx.getRealPath("/customer/upload");
+			
 			out.println(path);
 
 			File d = new File(path);

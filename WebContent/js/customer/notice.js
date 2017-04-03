@@ -1,9 +1,4 @@
-/**
- * 
- */
 	
-
-
 	window.addEventListener("load",function(){
 		
 		var btnResult = document.getElementById("btn-result");

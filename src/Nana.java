@@ -35,7 +35,7 @@ public class Nana extends HttpServlet {
 	  ImageIO.write(image, "png",os);*/
 	   
 	   
-	   
+	  
 	  response.setCharacterEncoding("UTF-8");
 	  response.setContentType("text/html;charset=UTF-8");
 	  
