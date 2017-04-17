@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(function(){			
+	//get으로 가져오는 데이터
+	//1. 텍스트 $.get
+	//2. JSON $.getJSON
+	//3. Script $.getScript
+	//4. Partial .load
+	$("#get-button").click(function(){
+			/* $
+			.ajax("../customer/room.html")
+			.done(function(data) {
+				alert(data);
+			}).always(function(){
+				alert("complete");
+			}); */
+			/* $
+			.ajax({
+				url:"../customer/room.html",
+				complete : function(xhr, status){
+					alert(xhr.responseText)
+				}
+			}); */
+			$.get("../customer/ajax-data.jsp",function(data){
+				alert(data);
+			});
+			
+	});
+	$("#json-button").click(function(){
+		$.getJSON("../customer/ajax-data.jsp",function(data){
+			alert(data[0].writerName);
+		});
+	});
+	$("#script-button").click(function(){
+		$.getScript("script.js",function(){
+			alert("a1");
+		})
+		.done(function(){
+			alert("a2");
+		})
+		;
+	});
+	$("#load-button").click(function(){
+		$("body div:last-child")
+		.load("../customer/notice-reg-partial.jsp");
+	});
+	$("#form-button").click(function(){
+		var data = $("#form").serialize();
+		alert(data);
+		
+		$.post("post-proc.jsp",data, function(d){
+			alert(d);
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<div>
+		<input id="get-button" type="button" value="get" />
+		<input id="json-button" type="button" value="getJSON" />
+		<input id="script-button" type="button" value="getScript" />
+		<input id="load-button" type="button" value="load" />
+		<input id="form-button" type="button" value="submit" />
+	</div>
+	<div></div>
+	<form id="form" action="notice-reg-ajax" method="post" enctype="multipart/form-data">
+	    <table border="1">
+	       <tbody>
+	          <tr>
+	             <th>제목</th>
+	             <td><input name="title" type="text" /></td>
+	          </tr>
+	          <tr>
+	             <th>첨부파일<progress value="0" max="100"></progress></th>
+	             <td><input name="file" type="file" /></td>
+	          </tr>
+	          <tr>              
+	             <td colspan="2">
+	                <textarea name="content" rows="20" cols="80"></textarea>
+	             </td>
+	          </tr>   
+	       </tbody>
+	    </table>
+	    <!-- <div>      
+	       <input class="reg-button" type="submit" value="등록" />         
+	       <a href="ajax.jsp">취소</a>
+	    </div> -->
+  	</form> 
+</body>
+</html>

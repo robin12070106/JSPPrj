@@ -29,7 +29,7 @@
 	NoticeDao noticeDao = new MYSQLNoticeDao();
 	List<NoticeView> list = noticeDao.getList(pg, field, query);
 
-	Thread.sleep(2000);//새로운 캐셔 추가 같은 느낌, 2줄 되는 것, 병렬화
+	//Thread.sleep(2000);//새로운 캐셔 추가 같은 느낌, 2줄 되는 것, 병렬화
 	
 	Gson gson = new Gson();
 	String json = gson.toJson(list);

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//var btn = $("#btn");
+		//btn.bind("click",function(){
+		//btn.click(function(){
+			var img = $("<img />");
+			img.attr("src","../images/logo.png");
+			var td = $("table tr:nth-child(3) td");
+			
+			img.appendTo(td);
+			
+		$("#btn").click(function(){
+			
+			img
+			.animate({
+				width:"400px",
+				height:"100px",
+				opacity:.5			
+			}, 1000, function(){
+				img.clone().appendTo(td);				
+			})
+			.queue(function(){
+				img.attr("src","../images/1.jpg");			
+				img
+				.css("border", "2px solid red")
+				.dequeue(); /* queue이후 계속 진행하도록 */
+			})			
+			.delay(500)
+			.animate({
+				width:"200px",
+				height:"50px",
+				opacity:1
+			}, {
+				duration:500,
+				queue:false,
+				//step:
+			}/* , function(){
+			}
+				td.empty();} */);
+			
+
+			
+		
+			/* if(td.children().length==0)		
+				img.appendTo(td).parent().clone().appendTo(td);
+			else
+				img.detach(); */
+			//$("table tr:nth-child(3) td").append(img);
+		});
+	});
+</script>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" /></td>
+			</tr>
+			<tr>
+				<th>분류</th>
+				<td>
+					<select>
+						<option>a</option>
+						<option>b</option>
+						<option>c</option>
+						<option>d</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td><input id="btn" type="button" value="버튼"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

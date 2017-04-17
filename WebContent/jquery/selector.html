@@ -3,18 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.odd-box{
+		border: 1px solid red;
+	}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(function(){
 		
-		var txt = $("#txt");
+	/* 	var txt = $("input");
+		//jquery
+		txt.eq(0).attr("value","jquery");
+		//DOM
+		txt.get(1).value= "DOM"; */
+		
+		var div = $("div");
+		
+		div.children(":nth-child(1)").attr("value","1234");
+		
+		//div.each(function(){alert("aa")});
 
-		txt.attr("value","adfasdfas");
+		var input = $("input");
+		var toggleButton = $("#toggle-button");
 
+		toggleButton.click(function(){
+					
+			/* input.each(function(index, el){
+				$(el).toggleClass("odd-box");
+			}); */
+			input.toggleClass("odd-box");
+		});
+		
+		
 	});
 </script>
 </head>
 <body>
-	<input id="txt" type="text" />
+	<div>
+		<input id="toggle-button" type="button" value="toggle"/>
+	</div>
+	<div>
+		<input type="text" />
+		<div>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</div>
+		<input type="text" />
+		<input type="text" />
+	</div>
+	<input type="text" />
+	<input type="text" />
+	<input type="text" />
 </body>
 </html>

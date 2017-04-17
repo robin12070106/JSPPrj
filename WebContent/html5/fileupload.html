@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"></script>
+<style>
+	#upload-zone{
+		width: 500px;
+		height: 300px;
+		border: 1px solid red;
+	}
+	#upload-zone.enter{
+		background: maroon;
+	}
+	input[type='file']{
+		display: none;
+	}
+	#drag-zone{
+		border: 1px solid blue;
+		width: 500px;
+		height: 200px;
+	}
+	#drag-zone a,img{
+		display:block;
+		border: 1px solid green;
+		width: 100px;
+		height: 100px;
+	}	
+</style>
+<script type="text/javascript">
+	$(function(){
+		
+		//이벤트 버블링 또는 통지를 이용하기
+	/* 	$("#drag-zone").click(function(){
+			alert("zone");
+		});
+		$("#drag-zone div").click(function(e){
+			e.stopPropagation();
+			alert("div");
+		});
+		$("#drag-zone img").click(function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			alert("img");
+		}); */
+		
+		//캡쳐링
+	/* 	$("#drag-zone").get(0).addEventListener("click", function(e){
+			e.stopPropagation();
+			
+			alert("zone");
+		}, true);
+		$("#drag-zone div").get(0).addEventListener("click", function(){
+			alert("div");
+		}, true);
+		 */
+		
+			
+		/* 
+		$("#upload-zone").click(function(){
+			$("input[type='file']").trigger("click");
+		}); */
+		
+		$("#drag-zone a").bind("dragstart", function(e){
+			
+			var dt = e.originalEvent.dataTransfer;
+			
+			dt.effectAllowed = "copy";
+			dt.setData("text/plain", "http://mozilla.org");
+			
+			console.log("start");
+		});
+		
+		$("#upload-zone").bind("dragenter", function(){
+			$(this).addClass("enter");
+			console.log("entered");
+		});
+		$("#upload-zone").bind("drageover", function(e){
+			e.originalEvent.preventDefault();
+			
+			console.log("over");
+		});
+		$("#upload-zone").bind("dragleave", function(){
+			$(this).removeClass("enter");
+			console.log("leave");
+		});
+		$("#upload-zone").bind("drop", function(e){
+					
+			var dt = e.originalEvent.dataTransfer;
+		    var validate = dt.types[0].indexOf('Files')>=0;
+		    
+		    if(!validate){
+		    	alert("파일 형식이 아닙니다");
+		    	return;
+		    }
+		    
+		    var size = dt.files.length;
+		    
+		    if(size>1){
+		    	alert("두 개 이상 ㄴㄴ");
+		    	return;
+		    }
+		    
+		    alert("파일 업로드 합니다");
+		
+		});
+		
+	});
+	/* function allowDrop(ev) {
+	    ev.preventDefault();
+	}
+
+	function drag(ev) {
+	    ev.dataTransfer.setData("text", ev.target.id);
+	}
+
+	function drop(ev) {
+	    ev.preventDefault();
+	    var data = ev.dataTransfer.getData("text");
+	    ev.target.appendChild(document.getElementById(data));
+	} */
+</script>
+</head>
+<body>
+	<div id="upload-zone">
+		업로드할 파일을 선택 또는 끌어 놓기		
+	</div>
+	<div id="drag-zone">
+		<a draggable="true" href="http://www.google.com">D&D</a>
+		<img src="http://cfile6.uf.tistory.com/image/252BDC475579584104700E"/>
+	</div>
+	<input type="file"/>
+</body>
+</html>
